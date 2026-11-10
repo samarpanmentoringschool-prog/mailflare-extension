@@ -1,0 +1,103 @@
+{
+  "name": "mailflare-extension",
+  "displayName": "MailFlare - Email Alias Extension",
+  "version": "1.5.5",
+  "description": "Create email aliases for your own domains using Cloudflare Email Routing.",
+  "author": "Curetix <me@curetix.eu>",
+  "type": "module",
+  "keywords": [
+    "browser-extension",
+    "webext",
+    "browser-addons",
+    "browser-plugins",
+    "chrome",
+    "firefox",
+    "email"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/curetix/mailflare-extension.git"
+  },
+  "scripts": {
+    "prepare": "husky && plasmo build",
+    "dev": "plasmo dev --target=chrome-mv3",
+    "dev:firefox": "plasmo dev --target=firefox-mv3",
+    "dev:web": "run-p dev:vite dev:functions",
+    "dev:vite": "vite --port 4000",
+    "dev:functions": "wrangler pages dev --port 4001 dist/",
+    "build": "tsc && plasmo build --hoist --zip",
+    "build:all": "tsc && run-s build:chrome build:firefox",
+    "build:chrome": "plasmo build --zip --hoist --target=chrome-mv3",
+    "build:firefox": "plasmo build --zip --hoist --target=firefox-mv3",
+    "build:web": "run-s build:vite",
+    "build:vite": "tsc && vite build",
+    "typesafe-i18n": "typesafe-i18n",
+    "lint": "biome lint functions/ src/",
+    "format": "biome format --write functions/ src/"
+  },
+  "dependencies": {
+    "@emotion/react": "11.14.0",
+    "@mantine/core": "8.2.7",
+    "@mantine/form": "8.2.7",
+    "@mantine/hooks": "8.2.7",
+    "@mantine/notifications": "8.2.7",
+    "@plasmohq/messaging": "0.7.2",
+    "@plasmohq/storage": "1.15.0",
+    "@tabler/icons-react": "3.41.1",
+    "@tanstack/query-core": "5.96.2",
+    "@tanstack/react-query": "5.96.2",
+    "@tanstack/react-query-devtools": "5.96.2",
+    "@tanstack/react-query-persist-client": "5.96.2",
+    "autoprefixer": "10.4.27",
+    "better-psl": "^1.1.0",
+    "daisyui": "5.5.19",
+    "jotai": "2.19.0",
+    "jotai-tanstack-query": "0.11.0",
+    "plasmo": "0.90.5",
+    "postcss": "8.5.6",
+    "postcss-preset-mantine": "1.17.0",
+    "postcss-simple-vars": "7.0.1",
+    "random-words": "2.0.1",
+    "react": "19.2.4",
+    "react-dom": "19.2.4",
+    "tailwindcss": "3.4.17",
+    "typesafe-i18n": "5.27.1"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "2.4.10",
+    "@cloudflare/workers-types": "4.20260405.1",
+    "@plasmohq/rps": "1.8.7",
+    "@types/chrome": "0.1.39",
+    "@types/node": "25.5.2",
+    "@types/react": "19.2.14",
+    "@types/react-dom": "19.2.3",
+    "@vitejs/plugin-react-swc": "4.3.0",
+    "husky": "9.1.7",
+    "lint-staged": "16.4.0",
+    "typescript": "5.9.2",
+    "vite": "7.1.12",
+    "vite-plugin-pwa": "1.2.0",
+    "vite-tsconfig-paths": "6.1.1",
+    "wrangler": "4.80.0"
+  },
+  "manifest": {
+    "permissions": [
+      "activeTab",
+      "contextMenus"
+    ],
+    "host_permissions": [
+      "*://api.cloudflare.com/*"
+    ],
+    "browser_specific_settings": {
+      "gecko": {
+        "id": "{f0bdc9fa-a062-4424-baee-16530c53aa06}"
+      }
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "lib": ["ESNext"],
+    "moduleResolution": "Node",
+    "types": ["@cloudflare/workers-types"],
+    "noEmit": true,
+    "strict": true
+  }
+}
